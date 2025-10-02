@@ -25,7 +25,7 @@ const checkStringForPalindrome = (string) => {
   }
 
   return result === cleanString;
-}
+};
 
 
 // Строка является палиндромом
