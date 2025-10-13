@@ -60,7 +60,6 @@ const createPhoto = () => {
     comments: createComments()
   };
 };
-
 const createPhotos = Array.from({length: 25}, createPhoto);
 
 export {createPhotos};
