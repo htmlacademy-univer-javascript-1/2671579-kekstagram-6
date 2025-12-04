@@ -1,4 +1,2 @@
-import {createPhotos} from './data.js';
+import './data.js';
 import './thumbnail-renderer.js';
-
-createPhotos();
