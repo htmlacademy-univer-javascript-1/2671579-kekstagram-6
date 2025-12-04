@@ -19,4 +19,6 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const photoIdGenerator = createIdGenerator();
 
-export {generateCommentId, getRandomInteger, getRandomArrayElement, photoIdGenerator};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {generateCommentId, getRandomInteger, getRandomArrayElement, photoIdGenerator, isEscapeKey};
