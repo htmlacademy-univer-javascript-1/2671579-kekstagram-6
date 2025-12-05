@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 
+const COMMENT_PER_PORTION = 5;
+
 const bigPictureElement = document.querySelector('.big-picture');
 const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img img');
 const bigPictureLikesElement = bigPictureElement.querySelector('.likes-count');
@@ -14,14 +16,19 @@ const commentsLoader = bigPictureElement.querySelector('.comments-loader');
 
 const closeButton = bigPictureElement.querySelector('.big-picture__cancel');
 
+let currentComments = [];
+let shownCommentsCount = 0;
+
 const clearComments = () => {
   commentsListElement.innerHTML = '';
 };
 
-const renderComments = (comments) => {
+const renderCommentsPortion = () => {
   const fragment = document.createDocumentFragment();
 
-  comments.forEach(({ avatar, name, message }) => {
+  const nextPortion = currentComments.slice(shownCommentsCount, shownCommentsCount + COMMENT_PER_PORTION);
+
+  nextPortion.forEach(({ avatar, name, message }) => {
     const commentElement = commentTemplate.cloneNode(true);
 
     const img = commentElement.querySelector('.social__picture');
@@ -35,7 +42,19 @@ const renderComments = (comments) => {
   });
 
   commentsListElement.appendChild(fragment);
+
+  shownCommentsCount += nextPortion.length;
+
+  commentCountBlock.textContent = `${shownCommentsCount} из ${currentComments.length} комментариев`;
+
+  if (shownCommentsCount >= currentComments.length) {
+    commentsLoader.classList.add('hidden');
+  }
 };
+
+commentsLoader.addEventListener('click', () => {
+  renderCommentsPortion();
+});
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -52,11 +71,14 @@ function renderBigPicture({ url, description, likes, comments }) {
   bigPictureCommentsCountElement.textContent = comments.length;
   bigPictureDescriptionElement.textContent = description;
 
+  currentComments = comments;
+  shownCommentsCount = 0;
   clearComments();
-  renderComments(comments);
 
-  commentCountBlock.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  commentCountBlock.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
+
+  renderCommentsPortion();
 
   bigPictureElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
