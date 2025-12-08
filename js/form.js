@@ -1,4 +1,3 @@
-
 import { isEscapeKey } from './util.js';
 
 const form = document.querySelector('.img-upload__form');
