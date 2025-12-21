@@ -1,4 +1,6 @@
-import { isEscapeKey } from './util.js';
+import {isEscapeKey} from './util.js';
+import {sendPhoto} from './api.js';
+import {showSuccessMessage, showErrorMessage} from './messages.js';
 
 const form = document.querySelector('.img-upload__form');
 const uploadInput = form.querySelector('.img-upload__input');
@@ -96,9 +98,24 @@ pristine.addValidator(
 form.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  const isValid = pristine.validate();
-
-  if (isValid) {
-    form.submit();
+  if (!pristine.validate()) {
+    return;
   }
+
+  const submitButton = form.querySelector('.img-upload__submit');
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+
+  sendPhoto(new FormData(form))
+    .then(() => {
+      closeForm();
+      showSuccessMessage();
+    })
+    .catch(() => {
+      showErrorMessage();
+    })
+    .finally(() => {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Опубликовать';
+    });
 });
