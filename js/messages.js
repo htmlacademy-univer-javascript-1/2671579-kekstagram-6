@@ -32,4 +32,4 @@ const showMessage = (templateId, buttonClass) => {
 const showSuccessMessage = () => showMessage('#success', 'success__button');
 const showErrorMessage = () => showMessage('#error', 'error__button');
 
-export { showSuccessMessage, showErrorMessage };
+export {showSuccessMessage, showErrorMessage};
