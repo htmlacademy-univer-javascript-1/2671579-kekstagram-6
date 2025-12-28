@@ -24,22 +24,7 @@ const setActiveButton = (button) => {
   button.classList.add('img-filters__button--active');
 };
 
-const applyFilter = debounce((filter, photos) => {
-  let filteredPhotos = photos;
-
-  switch (filter) {
-    case 'filter-random':
-      filteredPhotos = sortByRandom(photos);
-      break;
-    case 'filter-discussed':
-      filteredPhotos = sortByDiscussed(photos);
-      break;
-    default:
-      filteredPhotos = photos;
-  }
-
-  renderPictures(filteredPhotos);
-}, RERENDER_DELAY);
+const debouncedRender = debounce(renderPictures, RERENDER_DELAY);
 
 const initFilters = (photos) => {
   filtersContainer.classList.remove('img-filters--inactive');
@@ -51,7 +36,18 @@ const initFilters = (photos) => {
     }
 
     setActiveButton(button);
-    applyFilter(button.id, photos);
+
+    let filteredPhotos = photos;
+
+    if (button.id === 'filter-random') {
+      filteredPhotos = sortByRandom(photos);
+    }
+
+    if (button.id === 'filter-discussed') {
+      filteredPhotos = sortByDiscussed(photos);
+    }
+
+    debouncedRender(filteredPhotos);
   });
 };
 
