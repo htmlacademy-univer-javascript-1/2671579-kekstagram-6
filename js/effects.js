@@ -78,8 +78,9 @@ const applyEffect = (effect) => {
   effectLevelInput.value = max;
 
   slider.on('update', ([value]) => {
-    previewImage.style.filter = filter(value);
-    effectLevelInput.value = value;
+    const numericValue = Number(value);
+    previewImage.style.filter = filter(numericValue);
+    effectLevelInput.value = numericValue;
   });
 };
 
@@ -100,4 +101,4 @@ const resetEffects = () => {
 
 resetEffects();
 
-export { resetEffects };
+export {resetEffects};
