@@ -10,6 +10,15 @@ getPhotos()
     renderPictures(photos);
     initFilters(photos);
   })
-  .catch((err) => {
-    showAlert(err.message);
+  .catch(() => {
+    let errorBlock = document.querySelector('.data-error');
+    if (!errorBlock) {
+      errorBlock = document.createElement('div');
+      errorBlock.classList.add('data-error');
+      errorBlock.textContent = 'Не удалось загрузить фотографии';
+      document.body.prepend(errorBlock);
+    }
+    errorBlock.classList.remove('visually-hidden');
+
+    showAlert('Не удалось загрузить фотографии');
   });

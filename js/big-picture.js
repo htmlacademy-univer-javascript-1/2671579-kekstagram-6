@@ -19,13 +19,27 @@ const closeButton = bigPictureElement.querySelector('.big-picture__cancel');
 let currentComments = [];
 let shownCommentsCount = 0;
 
+let shownCountSpan = commentCountBlock.querySelector('.social__comment-shown-count');
+let totalCountSpan = commentCountBlock.querySelector('.social__comment-total-count');
+
+if (!shownCountSpan) {
+  shownCountSpan = document.createElement('span');
+  shownCountSpan.classList.add('social__comment-shown-count');
+  commentCountBlock.prepend(shownCountSpan, document.createTextNode(' из '));
+}
+
+if (!totalCountSpan) {
+  totalCountSpan = document.createElement('span');
+  totalCountSpan.classList.add('social__comment-total-count');
+  commentCountBlock.append(totalCountSpan, document.createTextNode(' комментариев'));
+}
+
 const clearComments = () => {
   commentsListElement.innerHTML = '';
 };
 
 const renderCommentsPortion = () => {
   const fragment = document.createDocumentFragment();
-
   const nextPortion = currentComments.slice(shownCommentsCount, shownCommentsCount + COMMENT_PER_PORTION);
 
   nextPortion.forEach(({ avatar, name, message }) => {
@@ -45,10 +59,13 @@ const renderCommentsPortion = () => {
 
   shownCommentsCount += nextPortion.length;
 
-  commentCountBlock.textContent = `${shownCommentsCount} из ${currentComments.length} комментариев`;
+  shownCountSpan.textContent = shownCommentsCount;
+  totalCountSpan.textContent = currentComments.length;
 
   if (shownCommentsCount >= currentComments.length) {
     commentsLoader.classList.add('hidden');
+  } else {
+    commentsLoader.classList.remove('hidden');
   }
 };
 
@@ -63,7 +80,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function renderBigPicture({ url, description, likes, comments }) {
+const renderBigPicture = ({ url, description, likes, comments }) => {
   bigPictureImgElement.src = url;
   bigPictureImgElement.alt = description;
 
@@ -84,7 +101,7 @@ function renderBigPicture({ url, description, likes, comments }) {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
 
 function closeBigPicture() {
   bigPictureElement.classList.add('hidden');
