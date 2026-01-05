@@ -99,6 +99,8 @@ const resetEffects = () => {
   resetScale();
 };
 
-resetEffects();
+const initEffects = () => {
+  resetEffects();
+};
 
-export {resetEffects};
+export {resetEffects, initEffects};
