@@ -18,7 +18,7 @@ const showMessage = (templateId, buttonClass) => {
 
   document.body.append(message);
 
-  const onEsc = (evt) => {
+  const onMessageEscKeydown = (evt) => {
     if (isEscapeKey(evt)) {
       remove();
     }
@@ -26,7 +26,7 @@ const showMessage = (templateId, buttonClass) => {
 
   function remove () {
     message.remove();
-    document.removeEventListener('keydown', onEsc);
+    document.removeEventListener('keydown', onMessageEscKeydown);
   }
 
   message.addEventListener('click', (evt) => {
@@ -35,7 +35,7 @@ const showMessage = (templateId, buttonClass) => {
     }
   });
 
-  document.addEventListener('keydown', onEsc);
+  document.addEventListener('keydown', onMessageEscKeydown);
 };
 
 const showSuccessMessage = () => showMessage('#success', 'success__button');

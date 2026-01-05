@@ -80,7 +80,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function renderBigPicture({ url, description, likes, comments }) {
+const renderBigPicture = ({ url, description, likes, comments }) => {
   bigPictureImgElement.src = url;
   bigPictureImgElement.alt = description;
 
@@ -101,7 +101,7 @@ function renderBigPicture({ url, description, likes, comments }) {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-}
+};
 
 function closeBigPicture() {
   bigPictureElement.classList.add('hidden');

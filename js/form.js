@@ -35,7 +35,7 @@ const openForm = () => {
   commentInput.removeAttribute('maxlength');
 
   resetEffects();
-  document.addEventListener('keydown', onFormEsc);
+  document.addEventListener('keydown', onFormEscKeydown);
 };
 
 const closeForm = () => {
@@ -47,10 +47,10 @@ const closeForm = () => {
   pristine.reset();
   resetEffects();
 
-  document.removeEventListener('keydown', onFormEsc);
+  document.removeEventListener('keydown', onFormEscKeydown);
 };
 
-function onFormEsc(evt) {
+function onFormEscKeydown(evt) {
   if (isEscapeKey(evt) && !document.querySelector('.error, .success')) {
     evt.preventDefault();
     closeForm();
@@ -164,3 +164,6 @@ form.addEventListener('submit', (evt) => {
       submitButton.textContent = 'Опубликовать';
     });
 });
+
+const initForm = () => {};
+export {initForm};
