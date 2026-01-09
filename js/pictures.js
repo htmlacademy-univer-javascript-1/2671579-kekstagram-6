@@ -1,4 +1,4 @@
-import {renderBigPicture} from './big-picture.js';
+import {openBigPicture} from './big-picture.js';
 
 const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -18,7 +18,7 @@ const renderPictures = (photos) => {
 
     picture.addEventListener('click', (evt) => {
       evt.preventDefault();
-      renderBigPicture(photo);
+      openBigPicture(photo);
     });
 
     fragment.appendChild(picture);

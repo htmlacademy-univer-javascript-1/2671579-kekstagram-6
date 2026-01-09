@@ -19,6 +19,8 @@ const commentInput = form.querySelector('.text__description');
 const previewImage = form.querySelector('.img-upload__preview img');
 const effectPreviews = form.querySelectorAll('.effects__preview');
 
+commentInput.removeAttribute('maxlength');
+
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--invalid',
@@ -31,8 +33,6 @@ const pristine = new Pristine(form, {
 const openForm = () => {
   overlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-
-  commentInput.removeAttribute('maxlength');
 
   resetEffects();
   document.addEventListener('keydown', onFormEscKeydown);
